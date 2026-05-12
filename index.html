@@ -6,6 +6,10 @@
   <title>Suho Lim — Electrical Engineer</title>
   <meta name="description" content="Suho Lim — Electrical Engineer specializing in hardware and machine learning. Building AI systems for robotics and medical devices." />
 
+  <!-- Favicon: inline SVG with initials "SL" in the site's accent color -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23c14a2b'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dominant-baseline='central' font-family='Georgia, serif' font-style='italic' font-size='34' font-weight='600' fill='%23f5f2ec'%3ESL%3C/text%3E%3C/svg%3E" />
+  <link rel="alternate icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23c14a2b'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dominant-baseline='central' font-family='Georgia, serif' font-style='italic' font-size='34' font-weight='600' fill='%23f5f2ec'%3ESL%3C/text%3E%3C/svg%3E" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -180,9 +184,12 @@
       position: relative;
       overflow: hidden;
     }
-    .portrait img { width: 100%; height: 100%; object-fit: cover; 
+    .portrait img { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; }
+    .portrait::after {
+      content: "[ your photo here ]";
+      position: absolute;
+      z-index: 0;
     }
-    .portrait::after { content: "[ your photo here ]"; }
     .about-text p {
       font-size: 1.0625rem;
       margin-bottom: 1.25rem;
@@ -218,23 +225,46 @@
     .project-list { display: flex; flex-direction: column; }
     .project {
       display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 3rem;
+      grid-template-columns: auto 140px 1fr auto;
+      gap: 2.5rem;
       padding: 2.5rem 0;
       border-bottom: 1px solid var(--line);
-      align-items: baseline;
+      align-items: center;
       text-decoration: none;
       color: var(--ink);
       transition: all 0.3s ease;
     }
     .project:hover { padding-left: 1rem; }
     .project:hover .project-title { color: var(--accent); }
+    .project:hover .project-thumb { transform: scale(1.03); }
     .project-year {
       font-family: var(--mono);
       font-size: 0.75rem;
       color: var(--ink-soft);
       white-space: nowrap;
+      align-self: start;
+      padding-top: 0.5rem;
     }
+    .project-thumb {
+      width: 140px;
+      height: 105px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+    .project-thumb img,
+    .project-thumb svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .project-body { align-self: center; }
     .project-title {
       font-family: var(--display);
       font-size: 1.75rem;
@@ -242,6 +272,7 @@
       letter-spacing: -0.01em;
       margin-bottom: 0.5rem;
       transition: color 0.2s;
+      line-height: 1.2;
     }
     .project-desc {
       color: var(--ink-soft);
@@ -258,8 +289,16 @@
       color: var(--ink-soft);
       background: var(--bg);
     }
-    .project-arrow { font-size: 1.5rem; transition: transform 0.3s ease; }
-    .project:hover .project-arrow { transform: translateX(8px); }
+    .project-arrow {
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+      align-self: center;
+      color: var(--ink-soft);
+    }
+    .project:hover .project-arrow {
+      transform: translateX(8px);
+      color: var(--accent);
+    }
 
     /* PUBLICATIONS */
     .pubs {
@@ -374,7 +413,16 @@
       nav ul { gap: 1.25rem; }
       .hero { padding: 4rem 0; }
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .project { grid-template-columns: 1fr; gap: 0.5rem; padding: 2rem 0; }
+      .project {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 2rem 0;
+      }
+      .project-thumb {
+        width: 100%;
+        height: 180px;
+      }
+      .project-year { padding-top: 0; }
       .project-arrow { display: none; }
       .edu-item { grid-template-columns: 1fr; gap: 0.25rem; }
       section { padding: 4rem 0; }
@@ -417,8 +465,8 @@
         <div class="portrait"><img src="me.jpg" alt="Suho Lim" /></div>
         <div class="about-text">
           <p>I'm an Electrical Engineer based in Denver, Colorado, working at the intersection of hardware design and machine learning.</p>
-          <p>My research focuses on deploying AI on resource-constrained edge devices — autonomous robots that sort waste, wearables that help visually impaired users navigate, and ear-worn sensors that monitor blood pressure continuously. I love the moment when a transfomer model structure quantize to small 8bit on not suported architecture.</p>
-          <p>Currently completing my MS in Electrical Engineering at CU Denver, with publications ACM MobiSys. Always curious about how AI, robotics, and medical systems can come together to make life better.</p>
+          <p>My research focuses on deploying AI on resource-constrained edge devices — autonomous robots that sort waste, wearables that help visually impaired users navigate, and ear-worn sensors that monitor blood pressure continuously. I love the moment when a transformer model quantizes down to 8-bit on an unsupported architecture.</p>
+          <p>Currently completing my MS in Electrical Engineering at CU Denver, with publications at ACM MobiSys. Always curious about how AI, robotics, and medical systems can come together to make life better.</p>
 
           <div class="edu-block">
             <div class="edu-item">
@@ -449,9 +497,21 @@
       </div>
       <div class="project-list">
 
-        <a href="https://eifcom26.pages.dev/" target="_blank" class="project">
+        <a href="https://eifcom26.pages.dev/" target="_blank" rel="noopener" class="project">
           <span class="project-year">2024 — 2026</span>
-          <div>
+          <div class="project-thumb">
+          <img src="concept.pdf" alt="EchoVision" />
+              <rect width="140" height="105" fill="#1a1a1a"/>
+              <circle cx="70" cy="52" r="32" fill="none" stroke="#c14a2b" stroke-width="1.5" opacity="0.9"/>
+              <circle cx="70" cy="52" r="22" fill="none" stroke="#c14a2b" stroke-width="1" opacity="0.6"/>
+              <circle cx="70" cy="52" r="12" fill="none" stroke="#c14a2b" stroke-width="1" opacity="0.4"/>
+              <circle cx="70" cy="52" r="4" fill="#c14a2b"/>
+              <rect x="20" y="20" width="20" height="14" fill="none" stroke="#f5f2ec" stroke-width="1" opacity="0.5"/>
+              <rect x="100" y="75" width="20" height="14" fill="none" stroke="#f5f2ec" stroke-width="1" opacity="0.5"/>
+              <rect x="105" y="22" width="14" height="10" fill="none" stroke="#f5f2ec" stroke-width="1" opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="project-body">
             <div class="project-title">EchoVision — AI Navigation for the Visually Impaired</div>
             <div class="project-desc">A wearable computer vision device that turns real-time object detection into haptic feedback. Hybrid NPU-CPU deployment of EfficientViT-SAM + YOLO on the Hailo-8 accelerator.</div>
             <div class="project-tags">
@@ -464,9 +524,27 @@
           <span class="project-arrow">↗</span>
         </a>
 
-       
+        <a href="#" class="project">
           <span class="project-year">2024 — 2025</span>
-          <div>
+          <div class="project-thumb">
+           <img src="image.png" alt="Waste-sorting robot" />
+              <rect width="140" height="105" fill="#ebe6dc"/>
+              <rect x="20" y="60" width="100" height="32" fill="#1a1a1a"/>
+              <circle cx="38" cy="92" r="8" fill="#1a1a1a"/>
+              <circle cx="102" cy="92" r="8" fill="#1a1a1a"/>
+              <circle cx="38" cy="92" r="3" fill="#c14a2b"/>
+              <circle cx="102" cy="92" r="3" fill="#c14a2b"/>
+              <rect x="50" y="32" width="40" height="28" fill="#1a1a1a"/>
+              <circle cx="70" cy="46" r="6" fill="#c14a2b"/>
+              <circle cx="70" cy="46" r="2" fill="#f5f2ec"/>
+              <line x1="90" y1="40" x2="115" y2="22" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="115" cy="22" r="5" fill="#c14a2b"/>
+              <rect x="22" y="18" width="14" height="14" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <line x1="22" y1="25" x2="36" y2="25" stroke="#1a1a1a" stroke-width="1"/>
+              <line x1="29" y1="18" x2="29" y2="32" stroke="#1a1a1a" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="project-body">
             <div class="project-title">Automated Waste-Sorting Robotic System</div>
             <div class="project-desc">Led the design of an autonomous metal-detection robot — custom YOLO models on Raspberry Pi for vision, TI Launchpad for low-level motor control, plus a multi-DOF robotic arm I designed and calibrated for precise pickup.</div>
             <div class="project-tags">
@@ -479,9 +557,22 @@
           <span class="project-arrow">↗</span>
         </a>
 
-       
+        <a href="#" class="project">
           <span class="project-year">2025 — 2026</span>
-          <div>
+          <div class="project-thumb">
+          <img src="ebp.jpg" alt="eBP ear-worn monitor" />
+              <rect width="140" height="105" fill="#1a1a1a"/>
+              <path d="M 45 30 Q 35 30 35 45 Q 35 60 45 70 Q 50 75 50 82 L 55 82 Q 58 75 58 65 Q 58 55 55 45 Q 55 30 45 30 Z"
+                    fill="none" stroke="#f5f2ec" stroke-width="1.5" opacity="0.85"/>
+              <circle cx="46" cy="52" r="4" fill="#c14a2b"/>
+              <circle cx="46" cy="52" r="8" fill="none" stroke="#c14a2b" stroke-width="0.8" opacity="0.5"/>
+              <polyline points="70,55 78,55 82,40 88,70 92,50 98,55 110,55 118,55 130,55"
+                        fill="none" stroke="#c14a2b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="70" y1="80" x2="130" y2="80" stroke="#f5f2ec" stroke-width="0.5" opacity="0.3"/>
+              <line x1="70" y1="30" x2="130" y2="30" stroke="#f5f2ec" stroke-width="0.5" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="project-body">
             <div class="project-title">eBP — Wearable Ear-Worn Blood Pressure Monitor</div>
             <div class="project-desc">A non-invasive ear-based blood pressure wearable using PPG and pressure sensors. Built the data acquisition pipeline, synchronized sensor inputs with motor-driven ear-canal adjustments, and validated through 100-cycle stress testing.</div>
             <div class="project-tags">
@@ -508,7 +599,7 @@
         <div class="pub-item">
           <div class="pub-title">eBP: An Ear-Worn Device for Frequent and Comfortable Blood Pressure Monitoring</div>
           <div class="pub-authors">Prativa Oli, <strong>Su Ho Lim</strong>, Huy Dinh, Nam Bui</div>
-          <div class="pub-venue">In developing</div>
+          <div class="pub-venue">In progress · targeting ACM MobiSys EIFCOM Workshop</div>
         </div>
       </div>
     </div>
@@ -573,7 +664,7 @@
       <div class="contact-links">
         <a href="mailto:suho.lim@ucdenver.edu">✉ suho.lim@ucdenver.edu</a>
         <a href="tel:+17208380639">☏ (720) 838-0639</a>
-        <a href="https://github.com/Suho-Lim" target="_blank">↗ GitHub</a>
+        <a href="https://github.com/Suho-Lim" target="_blank" rel="noopener">↗ GitHub</a>
       </div>
     </div>
   </section>
@@ -581,9 +672,9 @@
   <footer>
     <div class="container">
       <span>© 2026 Suho Lim. Denver, CO.</span>
-      <span>Built with HTML &amp; CSS · Hosted on GitHub Pages</span>
     </div>
   </footer>
 
 </body>
 </html>
+
